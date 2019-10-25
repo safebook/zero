@@ -1,17 +1,41 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <HelloWorld v-if="!logged" @login="login" />
+    <Inbox v-if="logged" />
+    <!-- can maybe see inbox even if unlogged -->
   </div>
 </template>
 
 <script>
+/* global sjcl */
 import HelloWorld from './components/HelloWorld.vue'
+import Inbox from './components/Inbox.vue'
 
 export default {
   name: 'app',
+  data () {
+    return {
+      logged: false,
+      pubkey: null,
+      seckey: null,
+      contacts: [],
+      messages: []
+    }
+  },
+  methods: {
+    login () {
+      const curve = sjcl.ecc.curves.c384
+
+      this.seckey = sjcl.bn.random(curve.r, 10)
+      this.pubkey = curve.G.mult(this.seckey).toBits()
+
+      this.logged = true
+    }
+  },
   components: {
-    HelloWorld
+    HelloWorld,
+    Inbox
   }
 }
 </script>
