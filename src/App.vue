@@ -1,9 +1,11 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld v-if="!logged" @login="login" />
-    <Inbox v-if="logged" />
+    <Inbox
+      :messages="messages"
+      @submitMessage="submitMessage" />
     <!-- can maybe see inbox even if unlogged -->
+    <HelloWorld v-if="!logged" @login="login" />
   </div>
 </template>
 
@@ -31,7 +33,19 @@ export default {
       this.pubkey = curve.G.mult(this.seckey).toBits()
 
       this.logged = true
+    },
+    submitMessage (data) {
+      let id = 1
+      if (this.messages.length > 1) {
+        id = this.messages[this.messages.length - 1].id + 1
+      }
+      this.messages.push({ id: id, data: data })
     }
+  },
+  created () {
+    fetch('https://api.myjson.com/bins/1c4pn4').then(response => {
+      response.json().then(data => { this.messages = data.messages })
+    })
   },
   components: {
     HelloWorld,
