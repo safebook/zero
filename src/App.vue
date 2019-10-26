@@ -5,13 +5,13 @@
       :messages="messages"
       @submitMessage="submitMessage" />
     <!-- can maybe see inbox even if unlogged -->
-    <HelloWorld v-if="!logged" @login="login" />
+    <Login v-if="!logged" @login="login" />
   </div>
 </template>
 
 <script>
 /* global sjcl */
-import HelloWorld from './components/HelloWorld.vue'
+import Login from './components/Login.vue'
 import Inbox from './components/Inbox.vue'
 
 export default {
@@ -48,7 +48,7 @@ export default {
     })
   },
   components: {
-    HelloWorld,
+    Login,
     Inbox
   }
 }
