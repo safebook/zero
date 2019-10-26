@@ -1,25 +1,5 @@
 <template>
 <div class="inbox">
-  <div id="outbox">
-    <div>
-      <textarea
-        v-model="currentMessage"
-        @keydown="autogrow">
-      </textarea>
-    </div>
-    <div>
-      <select>
-        <option
-          v-for="contact in contacts"
-          v-bind:key="contact.alias">
-          {{contact.alias}}
-        </option>
-      </select>
-    </div>
-    <div style="position: relative;">
-      <button @click="submitMessage">Submit</button>
-    </div>
-  </div>
   <p>This is inbox</p>
   <div>
   </div>
@@ -74,24 +54,5 @@ li {
 }
 a {
   color: #42b983;
-}
-#outbox {
-    width: 80%;
-    margin-left: 10%;
-    border: 1px solid black;
-    display: grid;
-    grid-template-columns: 60% 20% 20%;
-    position: relative;
-}
-textarea {
-    width: 100%;
-    resize: none;
-    overflow: hidden;
-}
-button {
-    margin-top: 2px;
-    margin-bottom: 2px;
-    position: absolute;
-    bottom: 0;
 }
 </style>

@@ -25,10 +25,11 @@
     <p class="pubkey" v-if="tab == 'profile'">
       {{encodedPubkey()}}
     </p>
+    <Outbox v-if="tab == 'messages'"
+            :contacts="contacts"
+            @submitMessage="submitMessage" />
     <Inbox v-if="tab == 'messages'"
-        :messages="messages"
-        :contacts="contacts"
-        @submitMessage="submitMessage" />
+        :messages="messages" />
     <Contacts
       v-if="tab == 'contacts'"
       :contacts="contacts"
@@ -40,6 +41,7 @@
 /* global sjcl */
 import Login from './components/Login.vue'
 import Inbox from './components/Inbox.vue'
+import Outbox from './components/Outbox.vue'
 import Contacts from './components/Contacts.vue'
 import base58 from 'bs58'
 
@@ -94,6 +96,7 @@ export default {
   components: {
     Login,
     Inbox,
+    Outbox,
     Contacts
   }
 }
