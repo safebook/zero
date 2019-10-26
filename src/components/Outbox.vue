@@ -1,22 +1,25 @@
 <template>
   <div id="outbox">
     <div>
-      <textarea
+      <textarea rows=1
         v-model="currentMessage"
         @keydown="autogrow">
       </textarea>
     </div>
     <div>
-      <select>
+      <select v-model="contact">
+        <option disabled value="">Select a contact</option>
         <option
           v-for="contact in contacts"
-          v-bind:key="contact.alias">
+          v-bind:key="contact.alias"
+          v-bind:value="contact.pubkey">
           {{contact.alias}}
         </option>
       </select>
     </div>
-    <div style="position: relative;">
-      <button @click="submitMessage">Submit</button>
+    <div>
+      <button disabled title="Select contact" v-if="!contact">Submit</button>
+      <button @click="submitMessage" v-if="contact">Submit</button>
     </div>
   </div>
 </template>
@@ -27,6 +30,7 @@ export default {
   props: ['contacts'],
   data () {
     return {
+      contact: '',
       currentMessage: ''
     }
   },
@@ -34,15 +38,19 @@ export default {
     submitMessage () {
       this.$emit('submitMessage', this.currentMessage)
       this.currentMessage = ''
+      this.autogrow()
     },
     autogrow () {
       setTimeout(() => {
         const el = document.querySelector('textarea')
-        el.style.cssText = 'height:auto; padding:0'
+        el.style.cssText = 'height:auto;'
         let height = el.scrollHeight
         el.style.height = height + 'px'
       }, 0)
     }
+  },
+  created () {
+    this.autogrow()
   }
 }
 </script>
@@ -66,20 +74,23 @@ a {
 #outbox {
     width: 80%;
     margin-left: 10%;
-    border: 1px solid black;
     display: grid;
     grid-template-columns: 60% 20% 20%;
-    position: relative;
 }
 textarea {
-    width: 100%;
-    resize: none;
-    overflow: hidden;
+  width: 100%;
+  resize: none;
+  overflow: hidden;
+  padding: 4px;
+  border-radius: 5px;
+    border: 1px solid lightgrey;
 }
-button {
-    margin-top: 2px;
-    margin-bottom: 2px;
-    position: absolute;
-    bottom: 0;
+#outbox select {
+  width: 90%;
+  padding: 2px;
+}
+#outbox button {
+  width: 100%;
+  padding: 2px;
 }
 </style>
