@@ -27,6 +27,7 @@
     </p>
     <Inbox v-if="tab == 'messages'"
         :messages="messages"
+        :contacts="contacts"
         @submitMessage="submitMessage" />
     <Contacts
       v-if="tab == 'contacts'"

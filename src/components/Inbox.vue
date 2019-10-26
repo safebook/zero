@@ -1,38 +1,42 @@
 <template>
-  <div class="inbox">
-    <div id="outbox">
-      <div>
-        <textarea
-          v-model="currentMessage"
-          @keydown="autogrow">
-        </textarea>
-      </div>
-      <div>
-        <p>To: Contact 1</p>
-      </div>
-      <div style="position: relative;">
-        <button @click="submitMessage">Submit</button>
-      </div>
-    </div>
-    <p>This is inbox</p>
+<div class="inbox">
+  <div id="outbox">
     <div>
+      <textarea
+        v-model="currentMessage"
+        @keydown="autogrow">
+      </textarea>
     </div>
     <div>
-      <div
-        v-for="msg in messages.slice().reverse()"
-        v-bind:key="msg.id">
-        {{msg}}
-      </div>
+      <select>
+        <option
+          v-for="contact in contacts"
+          v-bind:key="contact.alias">
+          {{contact.alias}}
+        </option>
+      </select>
+    </div>
+    <div style="position: relative;">
+      <button @click="submitMessage">Submit</button>
     </div>
   </div>
+  <p>This is inbox</p>
+  <div>
+  </div>
+  <div>
+    <div
+      v-for="msg in messages.slice().reverse()"
+      v-bind:key="msg.id">
+      {{msg}}
+    </div>
+  </div>
+</div>
 </template>
 
 <script>
 export default {
   name: 'Inbox',
-  props: {
-    messages: Array
-  },
+  props: ['contacts', 'messages'],
   data () {
     return {
       currentMessage: ''
