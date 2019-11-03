@@ -29,7 +29,9 @@ export default {
       logged: false,
       pubkey: null,
       seckey: null,
-      contacts: [],
+      contacts: [
+        { alias: 'user1', pubkey: 'p9gKJG5QM2ZVzLeo1E4DHuzpAxy43Bqh8oYQBGsC2xTSCouM1PTFrURrfi31PVo4kJbuf5S4MriF8tJ5JwrvmPSnbCjNTHUSkiBxfwD5qyYqGyXLaMvv41LS6HeTxkZqRHN' },
+        { alias: 'user2', pubkey: 'tvNtEpgkTbSz6RWMyeQpSB4MbtCb6eVhEXrdRiXeWnFz5J2JHJuBqEz6CXchsGn8h87LzYMw2rFzPMJEsKa2JtronxMuUWu3fQ9B1yPM9qtrnxySV7N8BTJwM5cmzTRmdrJ' }],
       messages: [],
       tab: 'messages'
     }
