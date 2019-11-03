@@ -31,9 +31,14 @@
       "plugin:vue/essential",
       "@vue/standard"
     ],
-    "rules": {},
+    "rules": {
+      "newIsCap": false
+    },
     "parserOptions": {
       "parser": "babel-eslint"
+    },
+    "globals": {
+      "sjcl": "readonly"
     }
   },
   "postcss": {

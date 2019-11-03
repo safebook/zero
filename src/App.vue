@@ -15,7 +15,6 @@
 </template>
 
 <script>
-/* global sjcl */
 import Menu from './components/Menu.vue'
 import Login from './components/Login.vue'
 import Inbox from './components/Inbox.vue'
