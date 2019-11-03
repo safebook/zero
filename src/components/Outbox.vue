@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     submitMessage () {
-      this.$emit('submitMessage', this.currentMessage)
+      this.$emit('submitMessage', this.currentMessage, this.contact)
       this.currentMessage = ''
       this.autogrow()
     },
