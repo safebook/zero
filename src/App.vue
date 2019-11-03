@@ -1,44 +1,22 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png" />
-    <div id="header">
-      <div>
-        <a href
-           @click.prevent="tab = 'messages'"
-           v-bind:class="{ active: tab == 'messages' }"
-           >Messages</a>
-      </div>
-      <div>
-        <a href
-           @click.prevent="tab = 'contacts'"
-           v-bind:class="{ active: tab == 'contacts' }"
-           >Contacts</a>
-      </div>
-      <div>
-        <a href
-           @click.prevent="tab = 'profile'"
-           v-bind:class="{ active: tab == 'profile' }"
-           >Profile</a>
-      </div>
+    <Menu v-if="logged" :tab="tab" @changeTab="changeTab" />
+    <div v-if="!logged">
+      <Login @login="login" />
     </div>
-    <Login v-if="!logged" @login="login" />
-    <p class="pubkey" v-if="tab == 'profile'">
-      {{encodedPubkey()}}
-    </p>
-    <Outbox v-if="tab == 'messages'"
-            :contacts="contacts"
-            @submitMessage="submitMessage" />
-    <Inbox v-if="tab == 'messages'"
-        :messages="messages" />
-    <Contacts
-      v-if="tab == 'contacts'"
-      :contacts="contacts"
-      @addContact="addContact" />
+    <div v-if="logged">
+      <p class="pubkey" v-if="tab == 'profile'">{{encodedPubkey()}}</p>
+      <Outbox v-if="tab == 'messages'" :contacts="contacts" @submitMessage="submitMessage" />
+      <Inbox v-if="tab == 'messages'" :messages="messages" />
+      <Contacts v-if="tab == 'contacts'" :contacts="contacts" @addContact="addContact" />
+    </div>
   </div>
 </template>
 
 <script>
 /* global sjcl */
+import Menu from './components/Menu.vue'
 import Login from './components/Login.vue'
 import Inbox from './components/Inbox.vue'
 import Outbox from './components/Outbox.vue'
@@ -86,6 +64,9 @@ export default {
         alias: alias,
         pubkey: pubkey
       })
+    },
+    changeTab (tab) {
+      this.tab = tab
     }
   },
   created () {
@@ -95,6 +76,7 @@ export default {
   },
   components: {
     Login,
+    Menu,
     Inbox,
     Outbox,
     Contacts
