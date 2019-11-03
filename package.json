@@ -32,7 +32,7 @@
       "@vue/standard"
     ],
     "rules": {
-      "newIsCap": false
+      "new-cap": ["error", { "newIsCap": false }]
     },
     "parserOptions": {
       "parser": "babel-eslint"
