@@ -47,7 +47,7 @@ export default {
     },
     submitMessage (data, pubkey) {
       let id = 1
-      if (this.messages.length > 1) {
+      if (this.messages.length >= 1) {
         id = this.messages[this.messages.length - 1].id + 1
       }
       this.messages.push({ id: id, data: data, pubkey: pubkey })
