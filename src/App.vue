@@ -88,7 +88,7 @@ export default {
     }
   },
   created () {
-    fetch('https://api.myjson.com/bins/1c4pn4').then(response => {
+    fetch('/messages').then(response => {
       response.json().then(data => { this.messages = data.messages })
     })
   },
