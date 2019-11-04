@@ -68,6 +68,14 @@ export default {
       console.log(msg)
       const b58msg = base58.encode(Buffer.from(sjcl.codec.bytes.fromBits(msg)))
       console.log(b58msg)
+
+      fetch('/messages', {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          data: b58msg
+        })
+      })
     },
     encodedPubkey () {
       if (this.pubkey) {
