@@ -6,6 +6,7 @@
       <Login @login="login" />
     </div>
     <div v-if="logged">
+      <a href @click.prevent="refresh">Refresh</a>
       <p class="pubkey" v-if="tab == 'profile'">{{encodedPubkey()}}</p>
       <Outbox v-if="tab == 'messages'" :contacts="contacts" @submitMessage="submitMessage" />
       <Inbox v-if="tab == 'messages'" :messages="messages" />
@@ -86,14 +87,43 @@ export default {
       }
     },
     addContact (alias, pubkey) {
-      console.log(alias, pubkey)
+      const bitArrayPubkey = sjcl.codec.bytes.toBits(base58.decode(pubkey))
+      const point = sjcl.ecc.curves.c384.fromBits(bitArrayPubkey)
+      const sharedPoint = point.mult(this.seckey)
+      const sharedKey = sjcl.hash.sha256.hash(sharedPoint.toBits())
       this.contacts.push({
         alias: alias,
-        pubkey: pubkey
+        pubkey: pubkey,
+        sharedKey: sharedKey
       })
     },
     changeTab (tab) {
       this.tab = tab
+    },
+    refresh () {
+      fetch('/messages').then(response => {
+        response.json().then(data => {
+          this.messages = data.messages
+          this.decryptMessages()
+        })
+      })
+    },
+    decryptMessages () {
+      for (let i = 0; i < this.messages.length; i++) {
+        const message = this.messages[i].data
+        const data = sjcl.codec.bytes.toBits(base58.decode(message))
+        const iv = sjcl.bitArray.bitSlice(data, 0, 128)
+        const hiddenData = sjcl.bitArray.bitSlice(data, 128)
+        for (let j = 0; j < this.contacts.length; j++) {
+          const cipher = new sjcl.cipher.aes(this.contacts[j].sharedKey)
+          try {
+            const bitArrayPlaintext = sjcl.mode.ccm.decrypt(cipher, hiddenData, iv)
+            this.messages[i].plaintext = sjcl.codec.utf8String.fromBits(bitArrayPlaintext)
+          } catch (e) {
+            console.log('Unmatched for ', this.contacts[j].alias)
+          }
+        }
+      }
     }
   },
   created () {
