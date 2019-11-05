@@ -30,6 +30,7 @@
 
 <script>
 export default {
+  name: 'Contacts',
   props: ['contacts'],
   data () {
     return {
