@@ -17,6 +17,8 @@ class Message(db.Model):
             'data': self.data
         }
 
+db.create_all()
+
 @app.route('/')
 def root():
     return app.send_static_file('index.html')
