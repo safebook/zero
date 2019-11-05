@@ -29,9 +29,7 @@ export default {
       logged: false,
       pubkey: null,
       seckey: null,
-      contacts: [
-        { alias: 'user1', pubkey: 'p9gKJG5QM2ZVzLeo1E4DHuzpAxy43Bqh8oYQBGsC2xTSCouM1PTFrURrfi31PVo4kJbuf5S4MriF8tJ5JwrvmPSnbCjNTHUSkiBxfwD5qyYqGyXLaMvv41LS6HeTxkZqRHN' },
-        { alias: 'user2', pubkey: 'tvNtEpgkTbSz6RWMyeQpSB4MbtCb6eVhEXrdRiXeWnFz5J2JHJuBqEz6CXchsGn8h87LzYMw2rFzPMJEsKa2JtronxMuUWu3fQ9B1yPM9qtrnxySV7N8BTJwM5cmzTRmdrJ' }],
+      contacts: [],
       messages: [],
       tab: 'messages'
     }
@@ -42,6 +40,9 @@ export default {
 
       this.seckey = sjcl.bn.random(curve.r, 10)
       this.pubkey = curve.G.mult(this.seckey).toBits()
+
+      this.addContact('user1', 'p9gKJG5QM2ZVzLeo1E4DHuzpAxy43Bqh8oYQBGsC2xTSCouM1PTFrURrfi31PVo4kJbuf5S4MriF8tJ5JwrvmPSnbCjNTHUSkiBxfwD5qyYqGyXLaMvv41LS6HeTxkZqRHN')
+      this.addContact('user2', 'tvNtEpgkTbSz6RWMyeQpSB4MbtCb6eVhEXrdRiXeWnFz5J2JHJuBqEz6CXchsGn8h87LzYMw2rFzPMJEsKa2JtronxMuUWu3fQ9B1yPM9qtrnxySV7N8BTJwM5cmzTRmdrJ')
 
       this.logged = true
     },
