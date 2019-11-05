@@ -175,7 +175,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* WEBPACK VAR INJECTION */(f
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n  props: ['contacts'],\n  data: function data() {\n    return {\n      currentContactAlias: '',\n      currentContactPubkey: ''\n    };\n  },\n  methods: {\n    addContact: function addContact() {\n      this.$emit('addContact', this.currentContactAlias, this.currentContactPubkey);\n      this.currentContactAlias = '';\n      this.currentContactPubkey = '';\n    }\n  }\n});\n\n//# sourceURL=webpack:///./src/components/Contacts.vue?./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options");
+eval("__webpack_require__.r(__webpack_exports__);\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n  name: 'Contacts',\n  props: ['contacts'],\n  data: function data() {\n    return {\n      currentContactAlias: '',\n      currentContactPubkey: ''\n    };\n  },\n  methods: {\n    addContact: function addContact() {\n      this.$emit('addContact', this.currentContactAlias, this.currentContactPubkey);\n      this.currentContactAlias = '';\n      this.currentContactPubkey = '';\n    }\n  }\n});\n\n//# sourceURL=webpack:///./src/components/Contacts.vue?./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options");
 
 /***/ }),
 
@@ -199,7 +199,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n//\n//\n//\n//\n//\n//\n//\n/
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n  name: 'HelloWorld',\n  data: function data() {\n    return {\n      logged: false\n    };\n  },\n  props: {\n    msg: String\n  },\n  methods: {\n    login: function login() {\n      this.$emit('login');\n      this.logged = true;\n    }\n  }\n});\n\n//# sourceURL=webpack:///./src/components/Login.vue?./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options");
+eval("__webpack_require__.r(__webpack_exports__);\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n  name: 'Login',\n  data: function data() {\n    return {\n      logged: false\n    };\n  },\n  props: {\n    msg: String\n  },\n  methods: {\n    login: function login() {\n      this.$emit('login');\n      this.logged = true;\n    }\n  }\n});\n\n//# sourceURL=webpack:///./src/components/Login.vue?./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options");
 
 /***/ }),
 
