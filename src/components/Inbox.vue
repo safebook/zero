@@ -1,8 +1,5 @@
 <template>
 <div class="inbox">
-  <p>This is inbox</p>
-  <div>
-  </div>
   <div>
     <div
       v-for="msg in messages.slice().reverse()"
