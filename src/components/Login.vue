@@ -1,7 +1,5 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>Hello this is it</p>
     <button @click="login">
       Login
     </button>
