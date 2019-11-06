@@ -49,29 +49,27 @@ export default {
 
       this.logged = true
     },
-    submitMessage (data, pubkey) {
+    submitMessage (plaintext, pubkey) {
       let id = 1
       if (this.messages.length >= 1) {
         id = this.messages[this.messages.length - 1].id + 1
       }
-      this.messages.push({ id: id, data: data, pubkey: pubkey })
 
       const curve = sjcl.ecc.curves.c384
       const point = curve.fromBits(sjcl.codec.bytes.toBits(base58.decode(pubkey)))
       const shared = point.mult(this.seckey)
       const key = sjcl.hash.sha256.hash(shared.toBits())
 
-      console.log(key)
-
       const iv = sjcl.random.randomWords(4)
       const cipher = new sjcl.cipher.aes(key)
-      const binaryData = sjcl.codec.utf8String.toBits(data)
+      const binaryData = sjcl.codec.utf8String.toBits(plaintext)
       const ciphertext = sjcl.mode.ccm.encrypt(cipher, binaryData, iv)
 
       const msg = sjcl.bitArray.concat(iv, ciphertext)
-      console.log(msg)
       const b58msg = base58.encode(Buffer.from(sjcl.codec.bytes.fromBits(msg)))
       console.log(b58msg)
+
+      this.messages.push({ id: id, data: b58msg, plaintext: plaintext })
 
       fetch('/messages', {
         method: 'post',
