@@ -4,7 +4,8 @@
     <div
       v-for="msg in messages.slice().reverse()"
       v-bind:key="msg.id">
-      {{msg}}
+      <span class="plaintext" v-if="msg.plaintext">{{msg.plaintext}}</span>
+      <span class="ciphertext" v-if="!msg.plaintext">{{msg.data}}</span>
     </div>
   </div>
 </div>
@@ -51,5 +52,8 @@ li {
 }
 a {
   color: #42b983;
+}
+.ciphertext {
+  color: #6c757d;
 }
 </style>
