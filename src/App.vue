@@ -164,5 +164,6 @@ export default {
 }
 #logo {
   font-size: 6em;
+  margin-bottom: 60px;
 }
 </style>
