@@ -1,11 +1,13 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <Menu v-if="logged" :tab="tab" @changeTab="changeTab" />
+    <div id="logo">
+      〇
+    </div>
     <div v-if="!logged">
       <Login @login="login" />
     </div>
     <div v-if="logged">
+      <Menu :tab="tab" @changeTab="changeTab" />
       <a href @click.prevent="refresh">Refresh</a>
       <p class="pubkey" v-if="tab == 'profile'">{{encodedPubkey()}}</p>
       <Outbox v-if="tab == 'messages'" :contacts="contacts" @submitMessage="submitMessage" />
@@ -159,5 +161,8 @@ export default {
   display: grid;
   grid-template-columns: 30% 30% 30%;
   margin-left: 10%;
+}
+#logo {
+  font-size: 6em;
 }
 </style>
