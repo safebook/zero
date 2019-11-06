@@ -62,8 +62,19 @@ export default {
 
       const iv = sjcl.random.randomWords(4)
       const cipher = new sjcl.cipher.aes(key)
-      const binaryData = sjcl.codec.utf8String.toBits(plaintext)
-      const ciphertext = sjcl.mode.ccm.encrypt(cipher, binaryData, iv)
+
+      const bitArrayPlaintext = sjcl.codec.utf8String.toBits(plaintext)
+      let bytesPlaintext = sjcl.codec.bytes.fromBits(bitArrayPlaintext)
+      if (bytesPlaintext.length > 256) {
+        console.log('should be <= 256B')
+        return
+      }
+      while (bytesPlaintext.length < 256) {
+        bytesPlaintext.push(0)
+      }
+      const bitArrayPaddedPlaintext = sjcl.codec.bytes.toBits(bytesPlaintext)
+
+      const ciphertext = sjcl.mode.ccm.encrypt(cipher, bitArrayPaddedPlaintext, iv)
 
       const msg = sjcl.bitArray.concat(iv, ciphertext)
       const b58msg = base58.encode(Buffer.from(sjcl.codec.bytes.fromBits(msg)))
