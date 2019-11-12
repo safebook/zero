@@ -131,7 +131,7 @@ export default {
             const bitArrayPlaintext = sjcl.mode.ccm.decrypt(cipher, hiddenData, iv)
             this.messages[i].plaintext = sjcl.codec.utf8String.fromBits(bitArrayPlaintext)
           } catch (e) {
-            console.log('Unmatched for ', this.contacts[j].alias)
+            // console.log('Unmatched for ', this.contacts[j].alias)
           }
         }
       }
