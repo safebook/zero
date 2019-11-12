@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="logo">
-      〇
+      ZER〇
     </div>
     <div v-if="!logged">
       <Login @login="login" />
@@ -172,7 +172,7 @@ export default {
   margin-left: 10%;
 }
 #logo {
-  font-size: 6em;
+  font-size: 4em;
   margin-bottom: 60px;
 }
 </style>
