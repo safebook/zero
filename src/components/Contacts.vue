@@ -1,5 +1,5 @@
-  <template>
-    <div>
+<template>
+  <div>
     <div id="addContactRow">
       <div>
         <input
