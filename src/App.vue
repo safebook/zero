@@ -9,10 +9,10 @@
     <div v-if="logged">
       <Menu :tab="tab" @changeTab="changeTab" />
       <a href @click.prevent="refresh">Refresh</a>
-      <p class="pubkey" v-if="tab == 'profile'">{{encodedPubkey()}}</p>
       <Outbox v-if="tab == 'messages'" :contacts="contacts" @submitMessage="submitMessage" />
       <Inbox v-if="tab == 'messages'" :messages="messages" />
       <Contacts v-if="tab == 'contacts'" :contacts="contacts" @addContact="addContact" />
+      <Profile v-if="tab == 'profile'" :pubkey="pubkey" />
     </div>
   </div>
 </template>
@@ -23,6 +23,7 @@ import Login from './components/Login.vue'
 import Inbox from './components/Inbox.vue'
 import Outbox from './components/Outbox.vue'
 import Contacts from './components/Contacts.vue'
+import Profile from './components/Profile.vue'
 import base58 from 'bs58'
 
 export default {
@@ -90,13 +91,6 @@ export default {
         })
       })
     },
-    encodedPubkey () {
-      if (this.pubkey) {
-        return base58.encode(Buffer.from(sjcl.codec.bytes.fromBits(this.pubkey)))
-      } else {
-        return '(null)'
-      }
-    },
     addContact (alias, pubkey) {
       const bitArrayPubkey = sjcl.codec.bytes.toBits(base58.decode(pubkey))
       const point = sjcl.ecc.curves.c384.fromBits(bitArrayPubkey)
@@ -147,7 +141,8 @@ export default {
     Menu,
     Inbox,
     Outbox,
-    Contacts
+    Contacts,
+    Profile
   }
 }
 </script>
