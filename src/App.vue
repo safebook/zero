@@ -42,11 +42,9 @@ export default {
 
       this.seckey = sjcl.bn.random(curve.r, 10)
       this.pubkey = curve.G.mult(this.seckey).toBits()
-
-      this.addContact('user1', 'p9gKJG5QM2ZVzLeo1E4DHuzpAxy43Bqh8oYQBGsC2xTSCouM1PTFrURrfi31PVo4kJbuf5S4MriF8tJ5JwrvmPSnbCjNTHUSkiBxfwD5qyYqGyXLaMvv41LS6HeTxkZqRHN')
-      this.addContact('user2', 'tvNtEpgkTbSz6RWMyeQpSB4MbtCb6eVhEXrdRiXeWnFz5J2JHJuBqEz6CXchsGn8h87LzYMw2rFzPMJEsKa2JtronxMuUWu3fQ9B1yPM9qtrnxySV7N8BTJwM5cmzTRmdrJ')
-
       this.logged = true
+
+      this.loadContactsFromLocalStorage()
     },
     loginFromSeckey (encodedSeckey) {
       const curve = sjcl.ecc.curves.c384
@@ -57,10 +55,16 @@ export default {
       this.pubkey = curve.G.mult(this.seckey).toBits()
       this.logged = true
 
-      this.addContact('user1', 'p9gKJG5QM2ZVzLeo1E4DHuzpAxy43Bqh8oYQBGsC2xTSCouM1PTFrURrfi31PVo4kJbuf5S4MriF8tJ5JwrvmPSnbCjNTHUSkiBxfwD5qyYqGyXLaMvv41LS6HeTxkZqRHN')
-      this.addContact('user2', 'tvNtEpgkTbSz6RWMyeQpSB4MbtCb6eVhEXrdRiXeWnFz5J2JHJuBqEz6CXchsGn8h87LzYMw2rFzPMJEsKa2JtronxMuUWu3fQ9B1yPM9qtrnxySV7N8BTJwM5cmzTRmdrJ')
-
+      this.loadContactsFromLocalStorage()
       this.decryptMessages()
+    },
+    loadContactsFromLocalStorage () {
+      try {
+        const contacts = JSON.parse(localStorage.getItem('contacts'))
+        contacts.forEach((o) => {
+          this.addContact(o.alias, o.pubkey)
+        })
+      } catch (e) {}
     },
     submitMessage (plaintext, pubkey) {
       let id = 1
@@ -113,6 +117,9 @@ export default {
         pubkey: pubkey,
         sharedKey: sharedKey
       })
+      localStorage.setItem('contacts', JSON.stringify(this.contacts.map((o) => {
+        return { alias: o.alias, pubkey: o.pubkey }
+      })))
     },
     changeTab (tab) {
       this.tab = tab
