@@ -8,14 +8,6 @@
       <p v-if="msg.plaintext">{{msg.plaintext}}</p>
       <p v-if="msg.hidden_stack" class="ciphertext">{{msg.hidden_stack}} hidden messages</p>
     </div>
-    <!--
-    <p
-      v-for="msg in messages.slice().reverse()"
-      v-bind:key="msg.id">
-      <span class="plaintext" v-if="msg.plaintext">{{msg.plaintext}}</span>
-      <span class="ciphertext" v-if="!msg.plaintext">{{msg.data}}</span>
-    </p>
-    -->
   </div>
 </div>
 </template>
@@ -67,7 +59,6 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h3 {
   margin: 40px 0 0;

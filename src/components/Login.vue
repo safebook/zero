@@ -19,27 +19,21 @@ export default {
   name: 'Login',
   data () {
     return {
-      logged: false,
       encodedSeckey: ''
     }
   },
-  props: {
-    msg: String
-  },
+  props: ['msg'],
   methods: {
     login () {
       this.$emit('login')
-      this.logged = true
     },
     loginFromSeckey () {
       this.$emit('loginFromSeckey', this.encodedSeckey)
-      this.logged = true
     }
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h3 {
   margin: 40px 0 0;
