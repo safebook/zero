@@ -8,9 +8,8 @@
     </div>
     <div v-if="logged">
       <Menu :tab="tab" @changeTab="changeTab" />
-      <a href @click.prevent="refresh">Refresh</a>
       <Outbox v-if="tab == 'messages'" :contacts="contacts" @submitMessage="submitMessage" />
-      <Inbox v-if="tab == 'messages'" :messages="messages" />
+      <Inbox v-if="tab == 'messages'" :messages="messages" @refresh="refresh" />
       <Contacts v-if="tab == 'contacts'" :contacts="contacts" @addContact="addContact" />
       <Profile v-if="tab == 'profile'" :pubkey="pubkey" :seckey="seckey"  />
     </div>

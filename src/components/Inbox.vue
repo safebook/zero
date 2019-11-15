@@ -1,6 +1,9 @@
 <template>
 <div class="inbox">
   <div>
+    <div>
+      <a href @click.prevent="$emit('refresh')">Refresh</a>
+    </div>
     <div v-for="(msg, index) in stacked_messages" :key="index">
       <p v-if="msg.plaintext">{{msg.plaintext}}</p>
       <p v-if="msg.hidden_stack" class="ciphertext">{{msg.hidden_stack}} hidden messages</p>
