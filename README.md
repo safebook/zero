@@ -3,11 +3,17 @@
 ## Project setup
 ```
 yarn install
+pip install flask
 ```
 
-### Compiles and hot-reloads for development
+### Compiles and watch for development
 ```
-yarn serve
+yarn dev
+```
+
+### Run flask server
+```
+flask run
 ```
 
 ### Compiles and minifies for production
