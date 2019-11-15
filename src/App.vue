@@ -1,8 +1,7 @@
 <template>
   <div id="app">
     <div id="logo">
-      ZER〇
-    </div>
+      ŻERʘ</div>
     <div v-if="!logged">
       <Login @login="login" @loginFromSeckey="loginFromSeckey" />
     </div>
