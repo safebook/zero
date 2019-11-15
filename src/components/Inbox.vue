@@ -1,7 +1,7 @@
 <template>
 <div class="inbox">
   <div>
-    <div>
+    <div id="refresh-button">
       <a href @click.prevent="$emit('refresh')">Refresh</a>
     </div>
     <div v-for="(msg, index) in stacked_messages" :key="index">
@@ -75,6 +75,9 @@ a {
   color: #42b983;
 }
 .ciphertext {
-  color: #6c757d;
+ color: #6c757d;
+}
+#refresh-button {
+ margin-top: 20px;
 }
 </style>
