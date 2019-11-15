@@ -4,7 +4,7 @@
       ZER〇
     </div>
     <div v-if="!logged">
-      <Login @login="login" />
+      <Login @login="login" @loginFromSeckey="loginFromSeckey" />
     </div>
     <div v-if="logged">
       <Menu :tab="tab" @changeTab="changeTab" />
@@ -12,7 +12,7 @@
       <Outbox v-if="tab == 'messages'" :contacts="contacts" @submitMessage="submitMessage" />
       <Inbox v-if="tab == 'messages'" :messages="messages" />
       <Contacts v-if="tab == 'contacts'" :contacts="contacts" @addContact="addContact" />
-      <Profile v-if="tab == 'profile'" :pubkey="pubkey" :seckey="seckey" />
+      <Profile v-if="tab == 'profile'" :pubkey="pubkey" :seckey="seckey"  />
     </div>
   </div>
 </template>
@@ -49,6 +49,20 @@ export default {
       this.addContact('user2', 'tvNtEpgkTbSz6RWMyeQpSB4MbtCb6eVhEXrdRiXeWnFz5J2JHJuBqEz6CXchsGn8h87LzYMw2rFzPMJEsKa2JtronxMuUWu3fQ9B1yPM9qtrnxySV7N8BTJwM5cmzTRmdrJ')
 
       this.logged = true
+    },
+    loginFromSeckey (encodedSeckey) {
+      const curve = sjcl.ecc.curves.c384
+
+      const bitArraySeckey = sjcl.codec.bytes.toBits(base58.decode(encodedSeckey))
+
+      this.seckey = sjcl.bn.fromBits(bitArraySeckey)
+      this.pubkey = curve.G.mult(this.seckey).toBits()
+      this.logged = true
+
+      this.addContact('user1', 'p9gKJG5QM2ZVzLeo1E4DHuzpAxy43Bqh8oYQBGsC2xTSCouM1PTFrURrfi31PVo4kJbuf5S4MriF8tJ5JwrvmPSnbCjNTHUSkiBxfwD5qyYqGyXLaMvv41LS6HeTxkZqRHN')
+      this.addContact('user2', 'tvNtEpgkTbSz6RWMyeQpSB4MbtCb6eVhEXrdRiXeWnFz5J2JHJuBqEz6CXchsGn8h87LzYMw2rFzPMJEsKa2JtronxMuUWu3fQ9B1yPM9qtrnxySV7N8BTJwM5cmzTRmdrJ')
+
+      this.decryptMessages()
     },
     submitMessage (plaintext, pubkey) {
       let id = 1

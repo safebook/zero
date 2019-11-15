@@ -1,8 +1,16 @@
 <template>
   <div class="hello">
-    <button @click="login">
-      Login
-    </button>
+    <div>
+      <button @click="login">
+        Login
+      </button>
+    </div>
+    <div>
+      <input type="text" v-model="encodedSeckey" />
+      <button @click="loginFromSeckey">
+        Login from private key
+      </button>
+    </div>
   </div>
 </template>
 
@@ -11,7 +19,8 @@ export default {
   name: 'Login',
   data () {
     return {
-      logged: false
+      logged: false,
+      encodedSeckey: ''
     }
   },
   props: {
@@ -20,6 +29,10 @@ export default {
   methods: {
     login () {
       this.$emit('login')
+      this.logged = true
+    },
+    loginFromSeckey () {
+      this.$emit('loginFromSeckey', this.encodedSeckey)
       this.logged = true
     }
   }
