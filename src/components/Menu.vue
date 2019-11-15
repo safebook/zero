@@ -27,3 +27,9 @@ export default {
   props: ['tab']
 }
 </script>
+
+<style scoped>
+#header {
+  margin-bottom: 20px;
+}
+</style>
