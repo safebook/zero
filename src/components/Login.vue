@@ -1,14 +1,19 @@
 <template>
   <div class="hello">
-    <div>
-      <button @click="login">
-        Login
-      </button>
+    <div id="join-now">
+      <a href @click.prevent="login">
+        Join now \o/
+      </a>
     </div>
-    <div>
+    <div id="join-from-private-key">
+      <a href @click.prevent="showSeckeyInput = true">
+        Login with existing private key
+      </a>
+    </div>
+    <div v-if="showSeckeyInput">
       <input type="text" v-model="encodedSeckey" />
       <button @click="loginFromSeckey">
-        Login from private key
+        Login
       </button>
     </div>
   </div>
@@ -19,7 +24,8 @@ export default {
   name: 'Login',
   data () {
     return {
-      encodedSeckey: ''
+      encodedSeckey: '',
+      showSeckeyInput: false
     }
   },
   props: ['msg'],
@@ -48,5 +54,12 @@ li {
 }
 a {
   color: #42b983;
+}
+#join-now {
+  font-size: 2.4em;
+  margin: 20px;
+}
+#join-from-private-key {
+  margin: 20px;
 }
 </style>
