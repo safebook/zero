@@ -1,11 +1,16 @@
 <template>
   <div>
-  <h3>Public Key</h3>
-  <div>
-    {{encodedPubkey}}</div>
-  <h3>Private Key</h3>
-  <div>
-    {{encodedPrivkey}}</div>
+    <h3>Public Key</h3>
+    <div>
+      {{encodedPubkey}}</div>
+    <h3>Private Key</h3>
+    <div v-if="!showPrivKey">
+      <p><a href @click.prevent="showPrivKey = true">Show</a></p>
+    </div>
+    <div v-if="showPrivKey">
+      <p>{{encodedPrivkey}}</p>
+      <p><a href @click.prevent="showPrivKey = false">Hide</a></p>
+    </div>
   </div>
 </template>
 
@@ -15,6 +20,11 @@ import base58 from 'bs58'
 export default {
   name: 'Profile',
   props: ['pubkey', 'seckey'],
+  data () {
+    return {
+      showPrivKey: false
+    }
+  },
   computed: {
     encodedPubkey () {
       if (this.pubkey) {
