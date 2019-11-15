@@ -9,7 +9,7 @@
       <Menu :tab="tab" @changeTab="changeTab" />
       <Outbox v-if="tab == 'messages'" :contacts="contacts" @submitMessage="submitMessage" />
       <Inbox v-if="tab == 'messages'" :messages="messages" @refresh="refresh" />
-      <Contacts v-if="tab == 'contacts'" :contacts="contacts" @addContact="addContact" />
+      <Contacts v-if="tab == 'contacts'" :contacts="contacts" @addContact="addContact" @removeContact="removeContact" />
       <Profile v-if="tab == 'profile'" :pubkey="pubkey" :seckey="seckey"  />
     </div>
   </div>
@@ -66,6 +66,11 @@ export default {
         })
       } catch (e) {}
     },
+    saveContactsToLocalStorage () {
+      localStorage.setItem('contacts', JSON.stringify(this.contacts.map((o) => {
+        return { alias: o.alias, pubkey: o.pubkey }
+      })))
+    },
     submitMessage (plaintext, pubkey) {
       let id = 1
       if (this.messages.length >= 1) {
@@ -117,9 +122,11 @@ export default {
         pubkey: pubkey,
         sharedKey: sharedKey
       })
-      localStorage.setItem('contacts', JSON.stringify(this.contacts.map((o) => {
-        return { alias: o.alias, pubkey: o.pubkey }
-      })))
+      this.saveContactsToLocalStorage()
+    },
+    removeContact (index) {
+      this.contacts.splice(index, 1)
+      this.saveContactsToLocalStorage()
     },
     changeTab (tab) {
       this.tab = tab

@@ -10,9 +10,9 @@
       <select v-model="contact">
         <option disabled value="">Select a contact</option>
         <option
-          v-for="contact in contacts"
-          v-bind:key="contact.alias"
-          v-bind:value="contact.pubkey">
+          v-for="(contact, index) in contacts"
+          :key="index"
+          :value="contact.pubkey">
           {{contact.alias}}
         </option>
       </select>

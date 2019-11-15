@@ -19,9 +19,11 @@
       </div>
     </div>
     <div id="contacts-box">
-      <div v-for="contact in contacts"
-        v-bind:key="contact.alias">
-        <h4 class="contact-name">{{contact.alias}}</h4>
+      <div v-for="(contact, index) in contacts" :key="index">
+        <p class="contact-name">
+          <span class="h4-like">{{contact.alias}} </span>
+          <a href @click.prevent="$emit('removeContact', index)">(remove)</a>
+        </p>
         <p class="contact-key">{{contact.pubkey}}</p>
       </div>
     </div>
@@ -65,5 +67,8 @@ export default {
 .contact-key {
   font-size: 0.9rem;
   color: grey;
+}
+.h4-like {
+  font-weight: bold;
 }
 </style>
