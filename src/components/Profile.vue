@@ -35,4 +35,10 @@ export default {
 </script>
 
 <style scoped>
+ h3 {
+   font-size: 1.2rem;
+ }
+ div {
+   font-size: 0.9rem;
+ }
 </style>

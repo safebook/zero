@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="addContactRow">
+    <div id="add-contact-row">
       <div>
         <input
           placeholder="Alias"
@@ -18,12 +18,12 @@
         <button @click="addContact">Add contact</button>
       </div>
     </div>
-    <div>
-      <p v-for="contact in contacts"
+    <div id="contacts-box">
+      <div v-for="contact in contacts"
         v-bind:key="contact.alias">
-        <span>{{contact.alias}} : </span>
-        <span>{{contact.pubkey}}</span>
-      </p>
+        <h4 class="contact-name">{{contact.alias}}</h4>
+        <p class="contact-key">{{contact.pubkey}}</p>
+      </div>
     </div>
   </div>
 </template>
@@ -49,8 +49,21 @@ export default {
 </script>
 
 <style>
-#addContactRow {
+#add-contact-row {
   display: grid;
-  grid-template-columns: 20% 60% 20%;
+  grid-template-columns: 15% 45% 15%;
+  margin-left: 20%;
+}
+#contacts-box {
+  margin-left: 15%;
+  margin-right: 15%;
+}
+.contact-name {
+  text-align: left;
+  margin-bottom: 5px;
+}
+.contact-key {
+  font-size: 0.9rem;
+  color: grey;
 }
 </style>

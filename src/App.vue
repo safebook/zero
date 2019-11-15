@@ -165,6 +165,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+  font-size: 1.15em;
   color: #2c3e50;
   margin-top: 60px;
 }
@@ -179,7 +180,7 @@ export default {
   margin-left: 10%;
 }
 #logo {
-  font-size: 4em;
+  font-size: 4rem;
   margin-bottom: 60px;
 }
 </style>

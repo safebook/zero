@@ -2,7 +2,7 @@
   <div class="hello">
     <div id="join-now">
       <a href @click.prevent="login">
-        Join now \o/
+        Join now
       </a>
     </div>
     <div id="join-from-private-key">
@@ -56,10 +56,11 @@ a {
   color: #42b983;
 }
 #join-now {
-  font-size: 2.4em;
-  margin: 20px;
+  font-size: 2.6rem;
+  margin: 30px;
 }
 #join-from-private-key {
   margin: 20px;
+  font-size: 0.9rem;
 }
 </style>
