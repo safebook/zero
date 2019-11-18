@@ -5,7 +5,10 @@
       <a href @click.prevent="$emit('refresh')">Refresh</a>
     </div>
     <div v-for="(msg, index) in stacked_messages" :key="index">
-      <p v-if="msg.plaintext">{{msg.plaintext}}</p>
+      <div v-if="msg.plaintext">
+        <b>You &lt;=&gt; {{msg.alias}} : </b>
+        <span v-if="msg.plaintext">{{msg.plaintext}}</span>
+      </div>
       <p v-if="msg.hidden_stack" class="ciphertext">{{msg.hidden_stack}} hidden messages</p>
     </div>
   </div>
