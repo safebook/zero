@@ -7,19 +7,19 @@
       </textarea>
     </div>
     <div>
-      <select v-model="contact">
+      <select v-model="contactIndex">
         <option disabled value="">Select a contact</option>
         <option
           v-for="(contact, index) in contacts"
           :key="index"
-          :value="contact.pubkey">
+          :value="index">
           {{contact.alias}}
         </option>
       </select>
     </div>
     <div>
-      <button disabled title="Select contact" v-if="!contact">Submit</button>
-      <button @click="submitMessage" v-if="contact">Submit</button>
+      <button disabled title="Select contact" v-if="contactIndex != ''">Submit</button>
+      <button @click="submitMessage" v-if="contactIndex == ''">Submit</button>
     </div>
   </div>
 </template>
@@ -30,13 +30,14 @@ export default {
   props: ['contacts'],
   data () {
     return {
-      contact: '',
+      contactIndex: '',
       currentMessage: ''
     }
   },
   methods: {
     submitMessage () {
-      this.$emit('submitMessage', this.currentMessage, this.contact)
+      console.log(this.contactIndex)
+      this.$emit('submitMessage', this.currentMessage, this.contacts[this.contactIndex].pubkey)
       this.currentMessage = ''
       this.autogrow()
     },
