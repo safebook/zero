@@ -18,8 +18,8 @@
       </select>
     </div>
     <div>
-      <button disabled title="Select contact" v-if="contactIndex != ''">Submit</button>
-      <button @click="submitMessage" v-if="contactIndex == ''">Submit</button>
+      <button disabled title="Select contact" v-if="contactIndex === ''">Submit</button>
+      <button @click="submitMessage" v-if="contactIndex !== ''">Submit</button>
     </div>
   </div>
 </template>
