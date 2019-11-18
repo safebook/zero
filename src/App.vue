@@ -23,7 +23,6 @@ import Outbox from './components/Outbox.vue'
 import Contacts from './components/Contacts.vue'
 import Profile from './components/Profile.vue'
 import helper from './helper'
-import base58 from 'bs58'
 
 export default {
   name: 'app',
@@ -120,15 +119,11 @@ export default {
     },
     decryptMessages () {
       for (let i = 0; i < this.messages.length; i++) {
-        const message = this.messages[i].data
-        const data = sjcl.codec.bytes.toBits(base58.decode(message))
-        const iv = sjcl.bitArray.bitSlice(data, 0, 128)
-        const hiddenData = sjcl.bitArray.bitSlice(data, 128)
+        const [iv, hiddenData] = helper.splitIv(helper.decode(this.messages[i].data))
         for (let j = 0; j < this.contacts.length; j++) {
-          const cipher = new sjcl.cipher.aes(this.contacts[j].sharedKey)
           try {
-            const bitArrayPlaintext = sjcl.mode.ccm.decrypt(cipher, hiddenData, iv)
-            this.messages[i].plaintext = sjcl.codec.utf8String.fromBits(bitArrayPlaintext)
+            const sharedKey = this.contacts[j].sharedKey
+            this.messages[i].plaintext = helper.decryptMessage(iv, hiddenData, sharedKey)
             this.messages[i].alias = this.contacts[j].alias
           } catch (e) {
             // console.log('Unmatched for ', this.contacts[j].alias)
