@@ -66,19 +66,14 @@ export default {
         return { alias: o.alias, pubkey: o.pubkey }
       })))
     },
-    submitMessage (plaintext, pubkey) {
+    submitMessage (plaintext, alias, sharedKey) {
       let id = 1
       if (this.messages.length >= 1) {
         id = this.messages[this.messages.length - 1].id + 1
       }
 
-      const curve = sjcl.ecc.curves.c384
-      const point = curve.fromBits(sjcl.codec.bytes.toBits(base58.decode(pubkey)))
-      const shared = point.mult(this.seckey)
-      const key = sjcl.hash.sha256.hash(shared.toBits())
-
       const iv = sjcl.random.randomWords(4)
-      const cipher = new sjcl.cipher.aes(key)
+      const cipher = new sjcl.cipher.aes(sharedKey)
 
       const bitArrayPlaintext = sjcl.codec.utf8String.toBits(plaintext)
       let bytesPlaintext = sjcl.codec.bytes.fromBits(bitArrayPlaintext)
@@ -97,7 +92,12 @@ export default {
       const b58msg = base58.encode(Buffer.from(sjcl.codec.bytes.fromBits(msg)))
       console.log(b58msg)
 
-      this.messages.push({ id: id, data: b58msg, plaintext: plaintext })
+      this.messages.push({
+        id: id,
+        data: b58msg,
+        alias: alias,
+        plaintext: plaintext
+      })
 
       fetch('/messages', {
         method: 'post',

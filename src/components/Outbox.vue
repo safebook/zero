@@ -36,8 +36,8 @@ export default {
   },
   methods: {
     submitMessage () {
-      console.log(this.contactIndex)
-      this.$emit('submitMessage', this.currentMessage, this.contacts[this.contactIndex].pubkey)
+      const contact = this.contacts[this.contactIndex]
+      this.$emit('submitMessage', this.currentMessage, contact.alias, contact.sharedKey)
       this.currentMessage = ''
       this.autogrow()
     },
