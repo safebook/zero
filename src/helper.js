@@ -13,5 +13,11 @@ export default {
     const seckey = sjcl.bn.fromBits(bitArraySeckey)
     const pubkey = curve.G.mult(seckey).toBits()
     return [seckey, pubkey]
+  },
+  computeSharedKeyFromEncodedPubkey (seckey, encodedPubkey) {
+    const bitArrayPubkey = sjcl.codec.bytes.toBits(base58.decode(encodedPubkey))
+    const point = curve.fromBits(bitArrayPubkey)
+    const sharedPoint = point.mult(seckey)
+    return sjcl.hash.sha256.hash(sharedPoint.toBits())
   }
 }

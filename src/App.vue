@@ -107,15 +107,11 @@ export default {
         })
       })
     },
-    addContact (alias, pubkey) {
-      const bitArrayPubkey = sjcl.codec.bytes.toBits(base58.decode(pubkey))
-      const point = sjcl.ecc.curves.c384.fromBits(bitArrayPubkey)
-      const sharedPoint = point.mult(this.seckey)
-      const sharedKey = sjcl.hash.sha256.hash(sharedPoint.toBits())
+    addContact (alias, encodedPubkey) {
       this.contacts.push({
         alias: alias,
-        pubkey: pubkey,
-        sharedKey: sharedKey
+        pubkey: encodedPubkey,
+        sharedKey: helper.computeSharedKeyFromEncodedPubkey(this.seckey, encodedPubkey)
       })
       this.saveContactsToLocalStorage()
     },
