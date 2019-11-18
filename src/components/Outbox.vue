@@ -43,8 +43,8 @@ export default {
     autogrow () {
       setTimeout(() => {
         const el = document.querySelector('textarea')
-        let height = el.scrollHeight
         el.style.cssText = 'height:auto;'
+        let height = el.scrollHeight
         el.style.height = height + 'px'
       }, 0)
     }
