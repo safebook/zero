@@ -19,5 +19,23 @@ export default {
     const point = curve.fromBits(bitArrayPubkey)
     const sharedPoint = point.mult(seckey)
     return sjcl.hash.sha256.hash(sharedPoint.toBits())
+  },
+  encryptMessage (plaintext, sharedKey) {
+    const bitArrayPlaintext = sjcl.codec.utf8String.toBits(plaintext)
+    let bytesPlaintext = sjcl.codec.bytes.fromBits(bitArrayPlaintext)
+    if (bytesPlaintext.length > 256) {
+      throw new Error('Message size should be <= 256B')
+    }
+    while (bytesPlaintext.length < 256) {
+      bytesPlaintext.push(0)
+    }
+
+    const bitArrayPaddedPlaintext = sjcl.codec.bytes.toBits(bytesPlaintext)
+
+    const cipher = new sjcl.cipher.aes(sharedKey)
+    const iv = sjcl.random.randomWords(4)
+    const ciphertext = sjcl.mode.ccm.encrypt(cipher, bitArrayPaddedPlaintext, iv)
+    const msg = sjcl.bitArray.concat(iv, ciphertext)
+    return base58.encode(Buffer.from(sjcl.codec.bytes.fromBits(msg)))
   }
 }
