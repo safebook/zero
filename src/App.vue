@@ -64,7 +64,9 @@ export default {
         contacts.forEach((o) => {
           this.addContact(o.alias, o.pubkey)
         })
-      } catch (e) {}
+      } catch (error) {
+        console.error(error)
+      }
     },
     saveContactsToLocalStorage () {
       localStorage.setItem('contacts', JSON.stringify(this.contacts.map((o) => {
