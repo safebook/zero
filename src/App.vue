@@ -37,6 +37,9 @@ export default {
     }
   },
   methods: {
+    changeTab (tab) {
+      this.tab = tab
+    },
     loadContactsFromLocalStorage () {
       try {
         const contacts = JSON.parse(localStorage.getItem('contacts'))
@@ -94,29 +97,6 @@ export default {
         })
       })
     },
-    addContact (alias, encodedPubkey) {
-      this.contacts.push({
-        alias: alias,
-        pubkey: encodedPubkey,
-        sharedKey: helper.computeSharedKeyFromEncodedPubkey(this.seckey, encodedPubkey)
-      })
-      this.saveContactsToLocalStorage()
-    },
-    removeContact (index) {
-      this.contacts.splice(index, 1)
-      this.saveContactsToLocalStorage()
-    },
-    changeTab (tab) {
-      this.tab = tab
-    },
-    refresh () {
-      fetch('/messages').then(response => {
-        response.json().then(data => {
-          this.messages = data.messages
-          this.decryptMessages()
-        })
-      })
-    },
     decryptMessages () {
       for (let i = 0; i < this.messages.length; i++) {
         const [iv, hiddenData] = helper.splitIv(helper.decode(this.messages[i].data))
@@ -130,6 +110,26 @@ export default {
           }
         }
       }
+    },
+    addContact (alias, encodedPubkey) {
+      this.contacts.push({
+        alias: alias,
+        pubkey: encodedPubkey,
+        sharedKey: helper.computeSharedKeyFromEncodedPubkey(this.seckey, encodedPubkey)
+      })
+      this.saveContactsToLocalStorage()
+    },
+    removeContact (index) {
+      this.contacts.splice(index, 1)
+      this.saveContactsToLocalStorage()
+    },
+    refresh () {
+      fetch('/messages').then(response => {
+        response.json().then(data => {
+          this.messages = data.messages
+          this.decryptMessages()
+        })
+      })
     }
   },
   created () {
