@@ -1,5 +1,10 @@
 <template>
   <div class="hello">
+    <div>
+      <p>No metadata messaging network</p>
+      <p>Every message is the same (same size and random data) if you cannot decrypt it</p>
+      <p>Non-serious proof-of-concept inspired by <a href="https://www.bitmessage.org/wiki/Main_Page">bitmessage</a></p>
+    </div>
     <div id="join-now">
       <a href @click.prevent="login">
         Join now
