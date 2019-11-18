@@ -38,19 +38,6 @@ export default {
     }
   },
   methods: {
-    login () {
-      [this.seckey, this.pubkey] = helper.createKeys()
-      this.logged = true
-
-      this.loadContactsFromLocalStorage()
-    },
-    loginFromSeckey (encodedSeckey) {
-      [this.seckey, this.pubkey] = helper.createKeysFromEncodedSeckey(encodedSeckey)
-      this.logged = true
-
-      this.loadContactsFromLocalStorage()
-      this.decryptMessages()
-    },
     loadContactsFromLocalStorage () {
       try {
         const contacts = JSON.parse(localStorage.getItem('contacts'))
@@ -65,6 +52,19 @@ export default {
       localStorage.setItem('contacts', JSON.stringify(this.contacts.map((o) => {
         return { alias: o.alias, pubkey: o.pubkey }
       })))
+    },
+    login () {
+      [this.seckey, this.pubkey] = helper.createKeys()
+      this.logged = true
+
+      this.loadContactsFromLocalStorage()
+    },
+    loginFromSeckey (encodedSeckey) {
+      [this.seckey, this.pubkey] = helper.createKeysFromEncodedSeckey(encodedSeckey)
+      this.logged = true
+
+      this.loadContactsFromLocalStorage()
+      this.decryptMessages()
     },
     submitMessage (plaintext, alias, sharedKey) {
       let id = 1
