@@ -71,10 +71,10 @@ a {
   color: #42b983;
 }
 #outbox {
-    width: 80%;
-    margin-left: 10%;
-    display: grid;
-    grid-template-columns: 60% 20% 20%;
+  width: 80%;
+  margin-left: 10%;
+  display: grid;
+  grid-template-columns: 60% 20% 20%;
 }
 textarea {
   width: 100%;
@@ -82,7 +82,7 @@ textarea {
   overflow: hidden;
   padding: 4px;
   border-radius: 5px;
-    border: 1px solid lightgrey;
+  border: 1px solid lightgrey;
 }
 #outbox select {
   width: 90%;
