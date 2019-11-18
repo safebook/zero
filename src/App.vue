@@ -22,6 +22,7 @@ import Inbox from './components/Inbox.vue'
 import Outbox from './components/Outbox.vue'
 import Contacts from './components/Contacts.vue'
 import Profile from './components/Profile.vue'
+import helper from './helper'
 import base58 from 'bs58'
 
 export default {
@@ -38,21 +39,13 @@ export default {
   },
   methods: {
     login () {
-      const curve = sjcl.ecc.curves.c384
-
-      this.seckey = sjcl.bn.random(curve.r, 10)
-      this.pubkey = curve.G.mult(this.seckey).toBits()
+      [this.seckey, this.pubkey] = helper.createKeys()
       this.logged = true
 
       this.loadContactsFromLocalStorage()
     },
     loginFromSeckey (encodedSeckey) {
-      const curve = sjcl.ecc.curves.c384
-
-      const bitArraySeckey = sjcl.codec.bytes.toBits(base58.decode(encodedSeckey))
-
-      this.seckey = sjcl.bn.fromBits(bitArraySeckey)
-      this.pubkey = curve.G.mult(this.seckey).toBits()
+      [this.seckey, this.pubkey] = helper.createKeysFromEncodedSeckey(encodedSeckey)
       this.logged = true
 
       this.loadContactsFromLocalStorage()
