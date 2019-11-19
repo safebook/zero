@@ -163,11 +163,6 @@ export default {
   width: 33%;
   word-break: break-all;
 }
-#header {
-  display: grid;
-  grid-template-columns: 30% 30% 30%;
-  margin-left: 10%;
-}
 #logo {
   font-size: 4rem;
   margin-bottom: 60px;

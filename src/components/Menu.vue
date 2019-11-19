@@ -30,6 +30,9 @@ export default {
 
 <style scoped>
 #header {
+  display: grid;
+  grid-template-columns: 30% 30% 30%;
+  margin-left: 10%;
   margin-bottom: 20px;
 }
 .active {
