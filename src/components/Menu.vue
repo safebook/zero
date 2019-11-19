@@ -32,4 +32,8 @@ export default {
 #header {
   margin-bottom: 20px;
 }
+.active {
+  text-decoration: none;
+  font-weight: bold;
+}
 </style>

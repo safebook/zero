@@ -374,7 +374,7 @@ eval("exports = module.exports = __webpack_require__(/*! ../../node_modules/css-
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ \"./node_modules/css-loader/dist/runtime/api.js\")(false);\n// Module\nexports.push([module.i, \"\\n#header[data-v-9bcc0be2] {\\n  margin-bottom: 20px;\\n}\\n\", \"\"]);\n\n\n//# sourceURL=webpack:///./src/components/Menu.vue?./node_modules/css-loader/dist/cjs.js??ref--6-oneOf-1-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-oneOf-1-2!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options");
+eval("exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ \"./node_modules/css-loader/dist/runtime/api.js\")(false);\n// Module\nexports.push([module.i, \"\\n#header[data-v-9bcc0be2] {\\n  margin-bottom: 20px;\\n}\\n.active[data-v-9bcc0be2] {\\n  text-decoration: none;\\n  font-weight: bold;\\n}\\n\", \"\"]);\n\n\n//# sourceURL=webpack:///./src/components/Menu.vue?./node_modules/css-loader/dist/cjs.js??ref--6-oneOf-1-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-oneOf-1-2!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options");
 
 /***/ }),
 
