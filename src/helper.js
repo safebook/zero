@@ -1,54 +1,39 @@
-import base58 from 'bs58'
-
-const curve = sjcl.ecc.curves.c384
+/* global Uint8Array */
+import nacl from 'tweetnacl'
+import naclUtil from 'tweetnacl-util'
 
 export default {
   decode (encodedData) {
-    return sjcl.codec.bytes.toBits(base58.decode(encodedData))
+    return naclUtil.decodeBase64(encodedData)
   },
   createKeys () {
-    const seckey = sjcl.bn.random(curve.r, 10)
-    const pubkey = curve.G.mult(seckey).toBits()
-    return [seckey, pubkey]
+    const o = nacl.box.keyPair()
+    return [o.secretKey, o.publicKey]
   },
   createKeysFromEncodedSeckey (encodedSeckey) {
-    const bitArraySeckey = this.decode(encodedSeckey)
-    const seckey = sjcl.bn.fromBits(bitArraySeckey)
-    const pubkey = curve.G.mult(seckey).toBits()
-    return [seckey, pubkey]
+    const seckey = naclUtil.decodeBase64(encodedSeckey)
+    const o = nacl.box.keyPair.fromSecretKey(seckey)
+    return [o.secretKey, o.publicKey]
   },
-  computeSharedKeyFromEncodedPubkey (seckey, encodedPubkey) {
-    const bitArrayPubkey = this.decode(encodedPubkey)
-    const point = curve.fromBits(bitArrayPubkey)
-    const sharedPoint = point.mult(seckey)
-    return sjcl.hash.sha256.hash(sharedPoint.toBits())
+  encryptMessage (plaintext, publicKey, secretKey) {
+    const msgData = naclUtil.decodeUTF8(plaintext)
+    // pad msgData
+    const nonce = nacl.randomBytes(nacl.box.nonceLength)
+    const box = nacl.box(msgData, nonce, naclUtil.decodeBase64(publicKey), secretKey)
+    let res = new Uint8Array(nonce.length + box.length)
+    res.set(nonce)
+    res.set(box, nonce.length)
+    return naclUtil.encodeBase64(res)
   },
-  encryptMessage (plaintext, sharedKey) {
-    const bitArrayPlaintext = sjcl.codec.utf8String.toBits(plaintext)
-    let bytesPlaintext = sjcl.codec.bytes.fromBits(bitArrayPlaintext)
-    if (bytesPlaintext.length > 256) {
-      throw new Error('Message size should be <= 256B')
+  decryptMessage (message, publicKey, secretKey) {
+    const data = naclUtil.decodeBase64(message)
+    const nonce = data.slice(0, nacl.box.nonceLength)
+    const box = data.slice(nacl.box.nonceLength, data.length)
+    const msgData = nacl.box.open(box, nonce, naclUtil.decodeBase64(publicKey), secretKey)
+    if (msgData) {
+      return naclUtil.encodeUTF8(msgData)
+    } else {
+      return null
     }
-    while (bytesPlaintext.length < 256) {
-      bytesPlaintext.push(0)
-    }
-
-    const bitArrayPaddedPlaintext = sjcl.codec.bytes.toBits(bytesPlaintext)
-
-    const cipher = new sjcl.cipher.aes(sharedKey)
-    const iv = sjcl.random.randomWords(4)
-    const ciphertext = sjcl.mode.ccm.encrypt(cipher, bitArrayPaddedPlaintext, iv)
-    const msg = sjcl.bitArray.concat(iv, ciphertext)
-    return base58.encode(Buffer.from(sjcl.codec.bytes.fromBits(msg)))
-  },
-  splitIv (data) {
-    const iv = sjcl.bitArray.bitSlice(data, 0, 128)
-    const hiddenData = sjcl.bitArray.bitSlice(data, 128)
-    return [iv, hiddenData]
-  },
-  decryptMessage (iv, hiddenData, sharedKey) {
-    const cipher = new sjcl.cipher.aes(sharedKey)
-    const bitArrayPlaintext = sjcl.mode.ccm.decrypt(cipher, hiddenData, iv)
-    return sjcl.codec.utf8String.fromBits(bitArrayPlaintext)
   }
 }

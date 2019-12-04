@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     addContact () {
-      this.$emit('addContact', this.currentContactAlias, this.currentContactPubkey)
+      this.$emit('addContact', this.currentContactAlias.trim(), this.currentContactPubkey.trim())
       this.currentContactAlias = ''
       this.currentContactPubkey = ''
     }

@@ -39,7 +39,7 @@ export default {
       this.$emit('login')
     },
     loginFromSeckey () {
-      this.$emit('loginFromSeckey', this.encodedSeckey)
+      this.$emit('loginFromSeckey', this.encodedSeckey.trim())
     }
   }
 }

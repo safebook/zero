@@ -11,6 +11,8 @@
   "dependencies": {
     "bs58": "^4.0.1",
     "core-js": "^3.3.2",
+    "tweetnacl": "^1.0.1",
+    "tweetnacl-util": "^0.15.0",
     "vue": "^2.6.10"
   },
   "devDependencies": {
@@ -33,7 +35,12 @@
       "@vue/standard"
     ],
     "rules": {
-      "new-cap": ["error", { "newIsCap": false }]
+      "new-cap": [
+        "error",
+        {
+          "newIsCap": false
+        }
+      ]
     },
     "parserOptions": {
       "parser": "babel-eslint"

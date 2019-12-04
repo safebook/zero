@@ -68,7 +68,7 @@ export default {
       this.loadContactsFromLocalStorage()
       this.decryptMessages()
     },
-    submitMessage (plaintext, alias, sharedKey) {
+    submitMessage (plaintext, alias, pubkey) {
       let id = 1
       if (this.messages.length >= 1) {
         id = this.messages[this.messages.length - 1].id + 1
@@ -76,7 +76,7 @@ export default {
 
       let encodedCiphertext = ''
       try {
-        encodedCiphertext = helper.encryptMessage(plaintext, sharedKey)
+        encodedCiphertext = helper.encryptMessage(plaintext, pubkey, this.seckey)
       } catch (error) {
         console.error(error)
         return
@@ -99,11 +99,9 @@ export default {
     },
     decryptMessages () {
       for (let i = 0; i < this.messages.length; i++) {
-        const [iv, hiddenData] = helper.splitIv(helper.decode(this.messages[i].data))
         for (let j = 0; j < this.contacts.length; j++) {
           try {
-            const sharedKey = this.contacts[j].sharedKey
-            this.messages[i].plaintext = helper.decryptMessage(iv, hiddenData, sharedKey)
+            this.messages[i].plaintext = helper.decryptMessage(this.messages[i].data, this.contacts[j].pubkey, this.seckey)
             this.messages[i].alias = this.contacts[j].alias
           } catch (e) {
             // console.log('Unmatched for ', this.contacts[j].alias)
@@ -114,8 +112,7 @@ export default {
     addContact (alias, encodedPubkey) {
       this.contacts.push({
         alias: alias,
-        pubkey: encodedPubkey,
-        sharedKey: helper.computeSharedKeyFromEncodedPubkey(this.seckey, encodedPubkey)
+        pubkey: encodedPubkey
       })
       this.saveContactsToLocalStorage()
     },

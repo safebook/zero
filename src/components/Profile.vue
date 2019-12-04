@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import base58 from 'bs58'
+import naclUtil from 'tweetnacl-util'
 
 export default {
   name: 'Profile',
@@ -28,14 +28,14 @@ export default {
   computed: {
     encodedPubkey () {
       if (this.pubkey) {
-        return base58.encode(Buffer.from(sjcl.codec.bytes.fromBits(this.pubkey)))
+        return naclUtil.encodeBase64(this.pubkey)
       } else {
         return '(null)'
       }
     },
     encodedPrivkey () {
       if (this.seckey) {
-        return base58.encode(Buffer.from(sjcl.codec.bytes.fromBits(this.seckey.toBits())))
+        return naclUtil.encodeBase64(this.seckey)
       } else {
         return '(null)'
       }
