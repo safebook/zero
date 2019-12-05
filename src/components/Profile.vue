@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import naclUtil from 'tweetnacl-util'
+import helper from '@/helper'
 
 export default {
   name: 'Profile',
@@ -28,14 +28,14 @@ export default {
   computed: {
     encodedPubkey () {
       if (this.pubkey) {
-        return naclUtil.encodeBase64(this.pubkey)
+        return helper.encodeBase58(this.pubkey)
       } else {
         return '(null)'
       }
     },
     encodedPrivkey () {
       if (this.seckey) {
-        return naclUtil.encodeBase64(this.seckey)
+        return helper.encodeBase58(this.seckey)
       } else {
         return '(null)'
       }
